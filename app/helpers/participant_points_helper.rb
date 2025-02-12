@@ -1,0 +1,2 @@
+module ParticipantPointsHelper
+end

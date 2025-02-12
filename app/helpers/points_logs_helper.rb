@@ -1,0 +1,2 @@
+module PointsLogsHelper
+end
