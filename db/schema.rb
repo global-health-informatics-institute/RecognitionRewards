@@ -30,6 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.string "name"
     t.date "start_date"
     t.date "end_date"
+    t.string "competition_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,7 +54,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
   create_table "people", primary_key: "person_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.date "DoB"
     t.string "gender"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

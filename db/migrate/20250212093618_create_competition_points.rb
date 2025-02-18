@@ -4,7 +4,6 @@ class CreateCompetitionPoints < ActiveRecord::Migration[8.0]
       t.integer :person_id
       t.integer :competition_id
       t.integer :points_earned
-
       t.timestamps
     end
   end

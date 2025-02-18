@@ -5,7 +5,6 @@ class CreateParticipantPoints < ActiveRecord::Migration[8.0]
       t.integer :competition_id
       t.integer :total_points
       t.integer :points_remaining
-
       t.timestamps
     end
   end

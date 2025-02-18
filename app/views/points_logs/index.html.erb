@@ -1,2 +1,34 @@
-<h1>PointsLogs#index</h1>
-<p>Find me in app/views/points_logs/index.html.erb</p>
+<p class="is-capitalized is-size-3 has-text-weight-semibold is-family-sans-serif">Rewards Center</p>
+
+<div class="columns">
+  <div class="column is-four-fifths">
+    <h4 class="subtitle is-4 is-bordered">Current Contests</h4>
+    <div class="grid">
+      <%(@open_contests || []).each do |election| %>
+        <div class="cell">
+          <div class="card">
+            <div class="card-content">
+              <h4 class="has-text-weight-bold is-4"><%= election.name%></h4>
+              <h6 class="subtitle is-6">
+                <%= "#{election.start_date.strftime('%d %b %Y')} - #{election.end_date.strftime('%d %b %Y')}" %>
+              </h6>
+              <div class="content">
+                Current Leader: <br/>
+                Winning Percentage: <br/>
+                Time to Close: <%= election.end_date.strftime('%d %b %Y %H:%M') %>
+              </div>
+              <%= link_to 'Reward', "/points_logs/new?competition_id=#{election.id}" ,  class: 'button is-success'%>
+              <%= link_to 'View Details', "/competitions/#{election.id}",  class: 'button is-link'%>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="column">
+    <h4 class="subtitle is-4">Closed Contests</h4>
+    <table>
+
+    </table>
+  </div>
+</div>

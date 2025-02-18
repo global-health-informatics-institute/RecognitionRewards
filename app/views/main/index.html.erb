@@ -1,2 +1,56 @@
-<h1>Main#index</h1>
-<p>Find me in app/views/main/index.html.erb</p>
+<p class="is-capitalized is-size-3 has-text-weight-semibold is-family-sans-serif">Leaderboard</p>
+<div class="columns">
+  <div class="column ">
+    <div class="card">
+      <p class="card-header-title">Live Rankings</p>
+      <div class="card-content">
+        <% if @current_competitions.empty? %>
+          No current competitions
+        <% else %>
+          <table class="table is-bordered is-fullwidth">
+            <thead>
+            <th>Competition</th>
+            <th>Candidate</th>
+            </thead>
+            <tbody>
+              <% (@current_competitions || []).each do |competition| %>
+                <tr>
+                  <td>
+                    <%= link_to competition.name, "/competitions/#{competition.id}" %>
+                  </td>
+                  <td>
+                    <% if !@ranks[competition.id].empty? %>
+                      <table class="table is-striped is-hoverable is-fullwidth">
+                        <% (@ranks[competition.id] || []).each do |ranking|%>
+                          <tr>
+                            <td class="has-text-centered"><%= @ranks[competition.id].index(ranking) +1 %></td>
+                            <td><%= ranking[0] %></td>
+                            <td class="has-text-right"><%= ranking[1] %></td>
+                          </tr>
+                        <% end %>
+                      </table>
+                    <%else %>
+                      No current Rankings
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<!--
+  <div class="column">
+    <div class="card">
+      <p class="card-header-title">Recent Winners</p>
+      <div class="card-content">
+        <div class="content">
+          <p class="title">123</p>
+          Lorem
+        </div>
+      </div>
+    </div>
+  </div> !-->
+</div>

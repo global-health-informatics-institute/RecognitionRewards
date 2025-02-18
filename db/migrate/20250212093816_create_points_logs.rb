@@ -5,9 +5,9 @@ class CreatePointsLogs < ActiveRecord::Migration[8.0]
       t.integer :gifter
       t.integer :receiver
       t.integer :points_awarded
+      t.string :reason
       t.datetime :date_awarded
       t.boolean :status
-
       t.timestamps
     end
   end
