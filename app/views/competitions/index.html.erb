@@ -1,10 +1,18 @@
 <p class="is-capitalized is-size-3 has-text-weight-semibold is-family-sans-serif">Competitions Center</p>
 
 <div>
-  <div class="has-text-right">
-    <%= link_to 'New Competition', '/competitions/new', class:'button is-primary' %>
-  </div>
-
+  <nav class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <p class="subtitle is-5"><strong>123</strong> posts</p>
+      </div>
+    </div>
+    <div class="level-right">
+      <div class="level-item">
+        <%= link_to 'New Competition', '/competitions/new', class:'button is-primary' %>
+      </div>
+    </div>
+  </nav>
   <table class="table is-striped is-fullwidth mt-2">
     <thead>
       <tr>

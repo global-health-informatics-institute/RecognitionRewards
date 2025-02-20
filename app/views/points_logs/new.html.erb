@@ -6,16 +6,16 @@
     <div class="field">
       <label class="label">Select Recipient</label>
       <div class="control">
-        <div class="select">
-          <%= select_tag(:candidate, options_for_select(@candidates), class: "form-select is-fullwidth") %>
+        <div class="select is-normal">
+          <%= select_tag(:candidate, options_for_select(@candidates), class: "form-select is-medium") %>
         </div>
       </div>
     </div>
     <div class="field">
-      <label class="label">Select Recipient</label>
+      <label class="label">Enter Number of Points</label>
       <div class="control">
-        <div class="select">
-          <%= form.number_field :points_awarded, class: 'input-control', required: true %>
+        <div class="">
+          <%= form.number_field :points_awarded, class: 'input is-medium', required: true %>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <p class="control">
         <%= hidden_field_tag :competition_id, @competition.id %>
         <%= hidden_field_tag :gifter, Current.user.person_id %>
-        <%= form.submit("Cast Vote", class:"button is-primary is-responsive is-fullwidth") %>
+        <%= form.submit("Award Point(s)", class:"button is-primary is-responsive is-fullwidth") %>
       </p>
       <p class="control">
         <%= link_to "Cancel", "/votes", class: "button is-danger is-responsive is-fullwidth" %>

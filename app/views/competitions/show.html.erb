@@ -1,0 +1,51 @@
+<p class="is-capitalized is-size-3 has-text-weight-semibold is-family-sans-serif"><%= @competition.name %> Dashboard</p>
+<nav class="level">
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Points Tally</p>
+      <p class="title">3,456</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Total Points</p>
+      <p class="title has-text-link">123</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Participants</p>
+      <p class="title">456K</p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Likes</p>
+      <p class="title">789</p>
+    </div>
+  </div>
+</nav>
+<div class="box is-fullwidth mt-2">
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Percentage of Points</th>
+            </tr>
+        </thead>
+        <tbody>
+          <%  i = 1 %>
+          <% (@ranking || []).each do |rank| %>
+            <tr>
+              <td><%= i %></td>
+              <td><%= rank[0] %></td>
+              <td><%= rank[1] %></td>
+              <td><%= i %></td>
+            </tr>
+            <% i += 1%>
+          <% end %>
+        </tbody>
+    </table>
+</div>
