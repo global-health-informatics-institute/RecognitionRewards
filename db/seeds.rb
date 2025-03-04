@@ -35,7 +35,7 @@ competitions = ['Perfect Sidekick','The True Gem','Flocks Favorite']
     Participant.create(person_id: person.id, competition_id: new_competition.id)
     used_points = 0
     (0..rand(20)).each do
-      assign_to = people.sample
+      assign_to = Person.all.sample
       awarded_points = 10*rand(5)
       date_awarded = Date.parse("2025-01-01 #{rand(23)}:#{rand(60)}:#{rand(60)}")
                          .advance(days: rand((new_competition.end_date - new_competition.start_date).to_i))
@@ -61,9 +61,11 @@ elections = ['The MVP', 'Mover of Mountains', 'Spotlight Award', 'Conqueror of H
   candidate_list = []
   (candidates || []).each do |candidate|
     candidate_list.push(Candidate.create(user_id: candidate.user.id,competition_id: new_election.id))
+    Participant.create(person_id: candidate.user.person_id, competition_id: new_election.id)
   end
   (people || []).each do |person|
     next if rand() < 0.15
+    Participant.create(person_id: person.id, competition_id: new_election.id)
     Vote.create(competition_id: new_election.id, person_id: person.id, candidate_id: candidate_list.sample.id)
   end
 end

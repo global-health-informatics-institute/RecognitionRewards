@@ -1,38 +1,109 @@
+
+
+<style>
+.cell {
+  display: grid;
+  height: 100% ;
+}
+</style>
+
 <p class="is-capitalized is-size-3 has-text-weight-semibold is-family-sans-serif"><%= @competition.name %> Dashboard</p>
 <nav class="level">
   <div class="level-item has-text-centered">
     <div>
-      <p class="heading">Points Tally</p>
-      <p class="title">3,456</p>
+      <p class="heading"><%= @competition.competition_type == 'Election'? 'Total Possible Votes' : 'Total Available Points' %></p>
+      <p class="title"><%= number_with_delimiter(@summary[:total_points]) %></p>
     </div>
   </div>
   <div class="level-item has-text-centered">
     <div>
-      <p class="heading">Total Points</p>
-      <p class="title has-text-link">123</p>
+      <p class="heading"><%= @competition.competition_type == 'Election'? 'Votes Cast' : 'Points Used' %></p>
+      <p class="title"><%= number_with_delimiter(@summary[:total_points] - @summary[:remaining_points]) %></p>
     </div>
   </div>
   <div class="level-item has-text-centered">
     <div>
-      <p class="heading">Participants</p>
-      <p class="title">456K</p>
+      <p class="heading"><%= @competition.competition_type == 'Election'? 'Remaining Votes' : 'Remaining Points' %></p>
+      <p class="title"><%= number_with_delimiter(@summary[:remaining_points]) %></p>
     </div>
   </div>
   <div class="level-item has-text-centered">
     <div>
-      <p class="heading">Likes</p>
-      <p class="title">789</p>
+      <p class="heading"><%= @competition.competition_type == 'Election'? 'Leader Votes Tally' : 'Leader Points Tally' %></p>
+      <p class="title"><%= number_with_delimiter(@summary[:leader_count]) %></p>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading"><%= @competition.competition_type == 'Election'? 'Votes to Win' : 'Points to Win' %></p>
+      <p class="title"><%= number_with_delimiter(@summary[:points_to_win]) %></p>
     </div>
   </div>
 </nav>
+<nav class="level">
+  <div class="level-item has-text-centered">
+    <div class="card is-fullheight">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-128x128">
+              <% if @summary[:leader].second == 'Male' %>
+                <%= image_tag('avatar-male.png', alt: 'Male Image') %>
+              <% else %>
+                <%= image_tag('avatar-female.png', alt: 'Female image') %>
+              <% end %>
+            </figure>
+          </div>
+          <div class="media-content has-text-left">
+            <table>
+              <tr>
+                <td colspan='3' class="title is-5">Current Leader</td>
+              </tr>
+              <tr>
+                <td colspan='3' class="subtitle is-5" >
+                  <%= @summary[:leader].first %>
+                </td>
+              </tr>
+              <tr>
+                <td>Points Earned</td>
+                <td>:</td>
+                <td> <%= @summary[:leader_count] %> </td>
+              </tr>
+              <tr>
+                <td>% Earned</td>
+                <td>:</td>
+                <td>
+                  <%= "#{((@summary[:leader_count]/@summary[:total_points].to_f)*100).round(2)}%" %>
+                </td>
+              </tr>
+              <tr>
+                <td>Points to Win</td>
+                <td>:</td>
+                <td> <%= @summary[:points_to_win]%> </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="level-item has-text-centered">
+    <div class="card h-100">
+      <div class="card-content">
+        <canvas id="myChart" width="700" height="90"></canvas>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <div class="box is-fullwidth mt-2">
     <table class="table is-fullwidth">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Count</th>
-                <th>Percentage of Points</th>
+                <th class="has-text-centered">Count</th>
+                <th class="has-text-centered">Percentage of Points</th>
             </tr>
         </thead>
         <tbody>
@@ -41,11 +112,17 @@
             <tr>
               <td><%= i %></td>
               <td><%= rank[0] %></td>
-              <td><%= rank[1] %></td>
-              <td><%= i %></td>
+              <td class="has-text-centered"><%= number_with_delimiter(rank[1]) %></td>
+              <td class="has-text-centered">
+                <%= ((rank[1]/@total_votes.to_f)*100).round(2) %>%
+              </td>
             </tr>
             <% i += 1%>
           <% end %>
         </tbody>
     </table>
 </div>
+
+<script>
+
+</script>

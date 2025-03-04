@@ -3,6 +3,24 @@ class Competition < ApplicationRecord
   validates :start_date, presence: true
   validates :end_date, presence: true
 
+  def competition_summary
+    rank = pretty_ranking(1)
+    summary = {
+      total_points: all_points_votes,
+      remaining_points: remaining_points,
+      leader: (rank.first.empty? ? '' : rank.first.first) ,
+      leader_count: (rank.first.empty? ? 0 : rank.first.second) ,
+      points_to_win: points_to_win
+    }
+
+    return summary
+  end
+
+  def points_to_win
+    second_place = top_ranking(2).second.vote_count rescue 0
+    available_points = remaining_points
+    return (second_place + available_points) +1
+  end
   def pretty_ranking(number=nil)
     ranks = top_ranking(number).collect{|x| [recipient(x), x.vote_count]}
     return ranks
@@ -18,7 +36,7 @@ class Competition < ApplicationRecord
   def recipient(result)
     person =  self.competition_type == "Election" ? result.candidate.user.person : Person.find(result.receiver)
 
-    person.full_name
+    [person.full_name, person.gender]
 
   end
 
@@ -31,6 +49,21 @@ class Competition < ApplicationRecord
   end
   private
 
+  def all_points_votes
+    if self.competition_type == "Election"
+      Participant.where("competition_id = ? ", self.id).count
+    else
+      ParticipantPoint.where(competition_id: self.id).sum(:total_points)
+    end
+  end
+  def remaining_points
+    if self.competition_type == "Election"
+      Participant.where("competition_id = ? and person_id not in (?)",
+                        self.id, Vote.where(competition_id: self.id).pluck(:person_id)).count
+    else
+      ParticipantPoint.where(competition_id: self.id).sum(:points_remaining)
+    end
+  end
   def competition_ranking(number=nil)
     if number.nil?
       PointsLog.select('receiver, sum(points_awarded) as vote_count')

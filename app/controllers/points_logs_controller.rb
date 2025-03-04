@@ -8,11 +8,18 @@ class PointsLogsController < ApplicationController
   end
 
   def create
-    
+
+    PointsLog.transaction do
+      PointsLog.create(competition_id: params[:competition_id], gifter: params[:gifter], receiver: params[:candidate],
+                       date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded])
+      pp = ParticipantPoint.find_by_competition_id_and_person_id(params[:competition_id], Current.user.person_id)
+      pp.points_remaining -= params[:points_log][:points_awarded].to_i
+      pp.save
+    end
   end
 
   def new
-    @vote = Vote.new
+    @reward = PointsLog.new
     @competition = Competition.find(params[:competition_id])
     @candidates = Participant.where(competition_id: @competition.id).collect { |c| [c.person.full_name, c.id] }
   end

@@ -11,7 +11,8 @@ class CompetitionsController < ApplicationController
 
   def show
     @competition = Competition.find(params[:id])
-    @ranking = @competition.pretty_ranking()
+    @summary = @competition.competition_summary
+    @rank = @competition.pretty_ranking(3)
   end
 
   def edit
