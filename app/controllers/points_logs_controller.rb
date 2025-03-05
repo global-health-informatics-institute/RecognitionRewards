@@ -16,6 +16,7 @@ class PointsLogsController < ApplicationController
       pp.points_remaining -= params[:points_log][:points_awarded].to_i
       pp.save
     end
+    redirect_to "/competitions/#{params[:competition_id]}"
   end
 
   def new

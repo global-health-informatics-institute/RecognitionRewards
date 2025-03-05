@@ -40,50 +40,55 @@
     </div>
   </div>
 </nav>
+
 <nav class="level">
   <div class="level-item has-text-centered">
     <div class="card is-fullheight">
-      <div class="card-content">
-        <div class="media">
-          <div class="media-left">
-            <figure class="image is-128x128">
-              <% if @summary[:leader].second == 'Male' %>
-                <%= image_tag('avatar-male.png', alt: 'Male Image') %>
-              <% else %>
-                <%= image_tag('avatar-female.png', alt: 'Female image') %>
-              <% end %>
-            </figure>
+      <div class="card-content" >
+        <% if @summary[:leader].nil? %>
+          <p class='title is-4'> No Current Leader </p>
+        <% else %>
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-128x128">
+                <% if @summary[:leader].second == 'Male' %>
+                  <%= image_tag('avatar-male.png', alt: 'Male Image') %>
+                <% else %>
+                  <%= image_tag('avatar-female.png', alt: 'Female image') %>
+                <% end %>
+              </figure>
+            </div>
+            <div class="media-content has-text-left">
+              <table>
+                <tr>
+                  <td colspan='3' class="title is-5">Current Leader</td>
+                </tr>
+                <tr>
+                  <td colspan='3' class="subtitle is-5" >
+                    <%= @summary[:leader].first %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Points Earned</td>
+                  <td>:</td>
+                  <td> <%= @summary[:leader_count] %> </td>
+                </tr>
+                <tr>
+                  <td>% Earned</td>
+                  <td>:</td>
+                  <td>
+                    <%= "#{((@summary[:leader_count]/@summary[:total_points].to_f)*100).round(2)}%" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Points to Win</td>
+                  <td>:</td>
+                  <td> <%= @summary[:points_to_win]%> </td>
+                </tr>
+              </table>
+            </div>
           </div>
-          <div class="media-content has-text-left">
-            <table>
-              <tr>
-                <td colspan='3' class="title is-5">Current Leader</td>
-              </tr>
-              <tr>
-                <td colspan='3' class="subtitle is-5" >
-                  <%= @summary[:leader].first %>
-                </td>
-              </tr>
-              <tr>
-                <td>Points Earned</td>
-                <td>:</td>
-                <td> <%= @summary[:leader_count] %> </td>
-              </tr>
-              <tr>
-                <td>% Earned</td>
-                <td>:</td>
-                <td>
-                  <%= "#{((@summary[:leader_count]/@summary[:total_points].to_f)*100).round(2)}%" %>
-                </td>
-              </tr>
-              <tr>
-                <td>Points to Win</td>
-                <td>:</td>
-                <td> <%= @summary[:points_to_win]%> </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -111,10 +116,10 @@
           <% (@ranking || []).each do |rank| %>
             <tr>
               <td><%= i %></td>
-              <td><%= rank[0] %></td>
+              <td><%= rank.first.first %></td>
               <td class="has-text-centered"><%= number_with_delimiter(rank[1]) %></td>
               <td class="has-text-centered">
-                <%= ((rank[1]/@total_votes.to_f)*100).round(2) %>%
+                <%= ((rank[1]/@summary[:total_points].to_f)*100).round(2) %>%
               </td>
             </tr>
             <% i += 1%>

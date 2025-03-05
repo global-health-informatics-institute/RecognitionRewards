@@ -11,14 +11,17 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
-  create_table "candidates", primary_key: "candidate_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "candidates", primary_key: "candidate_id", force: :cascade do |t|
     t.integer "user_id"
     t.integer "competition_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "competition_points", primary_key: "competition_point_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "competition_points", primary_key: "competition_point_id", force: :cascade do |t|
     t.integer "person_id"
     t.integer "competition_id"
     t.integer "points_earned"
@@ -26,7 +29,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "competitions", primary_key: "competition_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "competitions", primary_key: "competition_id", force: :cascade do |t|
     t.string "name"
     t.date "start_date"
     t.date "end_date"
@@ -35,7 +38,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "participant_points", primary_key: "participant_point_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "participant_points", primary_key: "participant_point_id", force: :cascade do |t|
     t.integer "person_id"
     t.integer "competition_id"
     t.integer "total_points"
@@ -44,14 +47,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "participants", primary_key: "participant_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "participants", primary_key: "participant_id", force: :cascade do |t|
     t.integer "competition_id"
     t.integer "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "people", primary_key: "person_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "people", primary_key: "person_id", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "gender"
@@ -59,7 +62,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "points_logs", primary_key: "points_log_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "points_logs", primary_key: "points_log_id", force: :cascade do |t|
     t.integer "competition_id"
     t.integer "gifter"
     t.integer "receiver"
@@ -70,7 +73,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "ip_address"
     t.string "user_agent"
@@ -79,7 +82,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "users", primary_key: "user_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "users", primary_key: "user_id", force: :cascade do |t|
     t.integer "person_id", null: false
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -88,7 +91,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_12_112131) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  create_table "votes", primary_key: "vote_id", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "votes", primary_key: "vote_id", force: :cascade do |t|
     t.integer "competition_id"
     t.integer "person_id"
     t.integer "candidate_id"

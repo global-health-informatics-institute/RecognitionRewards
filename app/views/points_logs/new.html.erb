@@ -26,7 +26,7 @@
         <%= form.submit("Award Point(s)", class:"button is-primary is-responsive is-fullwidth") %>
       </p>
       <p class="control">
-        <%= link_to "Cancel", "/votes", class: "button is-danger is-responsive is-fullwidth" %>
+        <%= link_to "Cancel", "/competitions/#{@competition.id}", class: "button is-danger is-responsive is-fullwidth" %>
       </p>
     </div>
 

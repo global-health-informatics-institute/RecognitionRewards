@@ -8,8 +8,8 @@ class Competition < ApplicationRecord
     summary = {
       total_points: all_points_votes,
       remaining_points: remaining_points,
-      leader: (rank.first.empty? ? '' : rank.first.first) ,
-      leader_count: (rank.first.empty? ? 0 : rank.first.second) ,
+      leader: (rank.first.nil? ? nil : rank.first.first) ,
+      leader_count: (rank.first.nil? ? 0 : rank.first.second) ,
       points_to_win: points_to_win
     }
 
