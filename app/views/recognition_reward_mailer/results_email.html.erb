@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <%= render 'recognition_reward_mailer/styling' %>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    Recognition Reward
+  </div>
+  <div class="content">
+    <h2>🏆 Competition Results Are In! 🏆</h2>
+
+    <p>Hello <b><i><%= @user.full_name %></i></b>,</p>
+
+    <p>
+      The <b><%= @competition.name %></b> competition has officially concluded!
+    </p>
+
+    <p>Thank you for your participation. 🎉</p>
+
+    <p>
+      Check the full results on the 
+      <a href="<%= "#{@url}/points_log" %>" style="color: #002130; font-weight: bold;">
+        Leaderboard
+      </a>.
+    </p>
+
+    <p>We appreciate your effort and look forward to seeing you in the next challenge!</p>
+  </div>
+
+  <div class="footer">
+    &copy; <%= Time.now.year %> GHII Informatics Team. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>

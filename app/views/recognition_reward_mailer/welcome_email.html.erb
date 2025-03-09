@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <%= render'recognition_reward_mailer/styling'%>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    Recognition Reward
+  </div>
+  <div class="content">
+    Hello <b><i> <%= @user.full_name %></i></b>!
+    <p>
+      You have successfully signed up to the GHII Employee Recognition Program.
+      Use your OMIS email to log in.
+      <br>
+      Your initial password is: <b><i> <%= @password %></i></b>.
+    </p>
+    <p>
+      To login, click here: <a href="<%= @url %>" style="color: #002130; font-weight: bold;">Recognition Reward</a>
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </div>
+  <div class="footer">
+    &copy; <%= Time.now.year %> GHII Informatics Team. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>
