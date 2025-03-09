@@ -4,4 +4,8 @@ class User < ApplicationRecord
 
   belongs_to :person
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  def full_name
+    "#{person.first_name} #{person.last_name}"
+  end
 end
