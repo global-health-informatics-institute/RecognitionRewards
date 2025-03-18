@@ -27,7 +27,7 @@
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-       <!-- <img src="/assets/asset.png" alt="" > /-->
+            <%= image_tag('asset.png', alt: 'Recognition Reward') %>
       </a>
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -42,8 +42,7 @@
       <div class="navbar-start">
         <%= link_to 'Dashboard', '/',class: 'navbar-item' %>
         <%= link_to 'Competitions', '/competitions',class: 'navbar-item' %>
-        <%= link_to 'Reward', '/points_logs',class: 'navbar-item' %>
-        <%= link_to 'Vote', '/votes',class: 'navbar-item' %>
+        <%= link_to 'Reward/Vote', '/points_logs',class: 'navbar-item' %>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">

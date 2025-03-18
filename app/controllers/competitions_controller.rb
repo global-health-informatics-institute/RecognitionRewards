@@ -13,6 +13,7 @@ class CompetitionsController < ApplicationController
     @competition = Competition.find(params[:id])
     @summary = @competition.competition_summary
     @ranking = @competition.pretty_ranking()
+    
   end
 
   def edit
