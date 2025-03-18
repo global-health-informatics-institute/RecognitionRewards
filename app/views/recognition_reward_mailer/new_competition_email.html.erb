@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <%= render'recognition_reward_mailer/styling'%>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    Recognition Reward
+  </div>
+  <div class="content">
+    Hello <b><i> <%= @user.full_name %></i></b>!
+    <p>
+      We are pleased to annouce that a new Category have been opened! <%= @competition.name%>
+    </p>
+    <p>
+      On your marks! Get Set! <a href="<%= @url %>" style="color: #002130; font-weight: bold;">GO!</a>
+    </p>
+  </div>
+  <div class="footer">
+    &copy; <%= Time.now.year %> GHII Informatics Team. All rights reserved.
+  </div>
+</div>
+
+</body>
+</html>
