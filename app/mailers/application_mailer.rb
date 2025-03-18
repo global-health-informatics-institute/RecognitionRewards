@@ -1,4 +1,6 @@
-class ApplicationMailer < ActionMailer::Base
-  default from: ENV['MAIL_USERNAME']
-  layout "mailer"
+# frozen_string_literal: true
+
+class ApplicationMailer < ActionMailer::Base # rubocop:disable Style/Documentation
+  default from: 'communications@ghii.org'
+  layout 'mailer'
 end
