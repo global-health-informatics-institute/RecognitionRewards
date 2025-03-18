@@ -13,10 +13,23 @@ source = "#{Rails.root}/db/data"
 puts "Seeding the database with data"
 
 puts 'Adding People'
-CSV.foreach("#{source}/person.csv",:headers=>:true) do |row|
-  new_person = Person.create(first_name:row[0], last_name: row[1], gender: row[2].eql?('M') ? 'Male' : 'Female')
-  username = "#{new_person.last_name}#{new_person.first_name[0]}#{rand(999).to_s.rjust(3,"0")}"
-  User.create(person_id: new_person.id, email_address: "#{username}@example.com", password: username)
+CSV.foreach("#{source}/person.csv", headers: true) do |row|
+  new_person = Person.create(
+    first_name: row[0],
+    last_name: row[1],
+    gender: row[2].eql?('M') ? 'Male' : 'Female'
+  )
+
+  username = "#{new_person.last_name}#{new_person.first_name[0]}#{rand(999).to_s.rjust(3, '0')}"
+  password = username
+  new_user = User.create(
+    person_id: new_person.id, 
+    email_address: "#{username}@example.com",
+    password: password
+  )
+
+  # Send welcome email
+  RecognitionRewardMailer.welcome_email(new_user, password).deliver_later
 end
 
 people = Person.all
