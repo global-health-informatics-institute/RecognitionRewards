@@ -6,17 +6,16 @@ class PointsLogsController < ApplicationController
                                                   .collect { |x| x.competition_id })
   end
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     PointsLog.transaction do
       PointsLog.create(competition_id: params[:competition_id], gifter: params[:gifter], receiver: params[:candidate],
                        date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded])
       pp = ParticipantPoint.find_by_competition_id_and_person_id(params[:competition_id], Current.user.person_id)
-      pp.points_remaining -= params[:points_log][:points_awarded].to_i
-      if pp.points_remaining < 0
-        flash[:error] = 'You do not have enough points to award'
-        redirect_to "/competitions/#{params[:competition_id]}"
-        return
+      if pp.points_remaining < params[:points_log][:points_awarded].to_i
+        flash[:alert] = 'You do not have enough points to award'
+        redirect_to new_points_log_path and return
       end
+      pp.points_remaining -= params[:points_log][:points_awarded].to_i
       pp.save
     end
     redirect_to "/competitions/#{params[:competition_id]}"

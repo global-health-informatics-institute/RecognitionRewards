@@ -1,8 +1,15 @@
 <div class="has-text-centered mt-4">
   <h3 class="is-3 title">Cast ballot in <%= @competition.name %> Elections</h3>
 </div>
+
+<% if flash[:alert] %>
+  <div id="flash-snackbar" class="snackbar is-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
 <div class="box mt-3">
-  <%= form_with model: @reward do |form|%>
+  <%= form_with model: @reward do |form| %>
     <div class="field">
       <label class="label">Select Recipient</label>
       <div class="control">
@@ -14,9 +21,7 @@
     <div class="field">
       <label class="label">Enter Number of Points</label>
       <div class="control">
-        <div class="">
-          <%= form.number_field :points_awarded, class: 'input is-medium', required: true %>
-        </div>
+        <%= form.number_field :points_awarded, class: 'input is-medium', required: true %>
       </div>
     </div>
     <div class="field is-grouped">
@@ -29,6 +34,44 @@
         <%= link_to "Cancel", "/competitions/#{@competition.id}", class: "button is-danger is-responsive is-fullwidth" %>
       </p>
     </div>
-
-  <%end %>
+  <% end %>
 </div>
+
+<style>
+  .snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #f14668; /* Bulma's danger color */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    z-index: 1000;
+    font-size: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+  }
+
+  .snackbar.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let snackbar = document.getElementById("flash-snackbar");
+    if (snackbar) {
+      snackbar.classList.add("show");
+      setTimeout(() => {
+        snackbar.classList.remove("show");
+      }, 3000); // Hide after 3 seconds
+    }
+  });
+</script>
