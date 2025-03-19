@@ -21,7 +21,7 @@
     <div class="field">
       <label class="label">Enter Number of Points</label>
       <div class="control">
-        <%= form.number_field :points_awarded, class: 'input is-medium', required: true %>
+        <%= form.number_field :points_awarded, class: 'input is-medium', min: 1, required: true %>
       </div>
     </div>
     <div class="field is-grouped">
