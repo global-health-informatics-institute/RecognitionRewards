@@ -16,7 +16,7 @@ class PointsLogsController < ApplicationController
         redirect_to new_points_log_path and return
       end
       if pp.points_remaining < params[:points_log][:points_awarded].to_i
-        flash[:alert] = 'You do not have enough points to award'
+        flash[:alert] = "You do not have enough points to award. Balance: #{pp.points_remaining}"
         redirect_to new_points_log_path and return
       end
       if params[:points_log][:points_awarded].to_i.negative?
