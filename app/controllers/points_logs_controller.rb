@@ -6,15 +6,14 @@ class PointsLogsController < ApplicationController
                                                   .collect { |x| x.competition_id })
   end
 
-  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+
+    if params[:candidate] == params[:gifter]
+      flash[:alert] = 'Smart!! But you cannot gift yourself'
+      redirect_to new_points_log_path and return
+    end
     PointsLog.transaction do
-      PointsLog.create(competition_id: params[:competition_id], gifter: params[:gifter], receiver: params[:candidate],
-                       date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded])
       pp = ParticipantPoint.find_by_competition_id_and_person_id(params[:competition_id], Current.user.person_id)
-      if params[:candidate] == params[:gifter]
-        flash[:alert] = 'Smart!! But you cannot gift yourself'
-        redirect_to new_points_log_path and return
-      end
       if pp.points_remaining < params[:points_log][:points_awarded].to_i
         flash[:alert] = "You do not have enough points to award. Balance: #{pp.points_remaining}"
         redirect_to new_points_log_path and return
@@ -31,6 +30,9 @@ class PointsLogsController < ApplicationController
         flash[:alert] = 'Smart!! But you cannot gift yourself'
         redirect_to new_points_log_path and return
       end
+
+      PointsLog.create(competition_id: params[:competition_id], gifter: params[:gifter], receiver: params[:candidate],
+                       date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded])
       pp.points_remaining -= params[:points_log][:points_awarded].to_i
       pp.save
     end
