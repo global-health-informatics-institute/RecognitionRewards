@@ -7,7 +7,6 @@ class PointsLogsController < ApplicationController
   end
 
   def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
-
     if params[:candidate] == params[:gifter]
       flash[:alert] = 'Smart!! But you cannot gift yourself'
       redirect_to new_points_log_path and return
@@ -26,10 +25,6 @@ class PointsLogsController < ApplicationController
         flash[:alert] = 'You can not gift nothing'
         redirect_to new_points_log_path and return
       end
-      if params[:candidate] == params[:gifter]
-        flash[:alert] = 'Smart!! But you cannot gift yourself'
-        redirect_to new_points_log_path and return
-      end
 
       PointsLog.create(competition_id: params[:competition_id], gifter: params[:gifter], receiver: params[:candidate],
                        date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded])
@@ -42,7 +37,7 @@ class PointsLogsController < ApplicationController
   def new
     @reward = PointsLog.new
     @competition = Competition.find(params[:competition_id])
-    @candidates = Participant.where(competition_id: @competition.id).collect { |c| [c.person.full_name, c.id] }
+    @candidates = Participant.where(competition_id: @competition.id).collect { |c| [c.person.full_name, c.person_id] }
   end
 
   def show
