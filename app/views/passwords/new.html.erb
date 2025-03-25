@@ -1,8 +1,27 @@
-<h1>Forgot your password?</h1>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.submit "Email reset instructions" %>
-<% end %>
+<div class="box mt-6">
+
+  <h3 class="subtitle is-3">Forgot your password?</h3>
+  <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+  <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+  <%= form_with url: passwords_path do |form| %>
+
+    <div class="field">
+      <label class="label">Email Address</label>
+      <div class="control">
+        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email_address",
+                             placeholder: "Enter your email address", value: params[:email_address], class: "input" %>
+      </div>
+    </div>
+    <br>
+    <div class="field is-grouped">
+      <p class="control">
+        <%= form.submit "Email Reset instruction", class: 'button is-success'%>
+      </p>
+    </div>
+
+  <% end %>
+  <br>
+
+</div>
