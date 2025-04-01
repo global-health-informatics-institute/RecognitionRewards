@@ -8,7 +8,6 @@
                 <th>Date</th>
                 <th>Person</th>
                 <th>Amount</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +17,6 @@
               <td><%= gift.date_awarded.strftime('%d %b %Y') %></td>
               <td><%= gift.gifted_to %></td>
               <td><%= gift.points_awarded %></td>
-              <td><%= link_to 'Revoke', "" %></td>
             </tr>
           <% end %>
         </tbody>

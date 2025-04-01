@@ -22,17 +22,17 @@ class Competition < ApplicationRecord
 
   def highest_gifter
     pts = PointsLog.select("gifter, sum(points_awarded) as points").where(competition_id: self.id).group(:gifter).order("points desc").first
-    return "#{Person.find(pts.gifter).full_name} (#{pts.points} points)"
+    return "#{Person.find(pts.gifter).full_name} (#{pts.points} points)" rescue "None"
   end
 
   def most_active
     pts = PointsLog.select("gifter, count(*) as times").where(competition_id: self.id).group(:gifter).order("times desc").first
-    return "#{Person.find(pts.gifter).full_name}"
+    return "#{Person.find(pts.gifter).full_name}" rescue "None"
   end
 
   def least_active
     pts = PointsLog.select("gifter, count(*) as times").where(competition_id: self.id).group(:gifter).order("times asc").first
-    return "#{Person.find(pts.gifter).full_name}"
+    return "#{Person.find(pts.gifter).full_name}" rescue "None"
   end
 
   def points_to_win
