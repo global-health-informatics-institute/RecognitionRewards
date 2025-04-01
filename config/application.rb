@@ -23,6 +23,6 @@ module RecognitionRewards
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.recognition_reward_url = 'http://192.168.76.216:4000'
+    config.recognition_reward_url = 'http://198.251.76.216:4000'
   end
 end
