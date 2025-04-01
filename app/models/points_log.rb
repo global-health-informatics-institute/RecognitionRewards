@@ -6,4 +6,12 @@ class PointsLog < ApplicationRecord
 
   belongs_to :competition
 
+  def gifted_by
+    Person.find(self.gifter).full_name
+  end
+
+  def gifted_to
+    Person.find(self.receiver).full_name
+  end
+
 end

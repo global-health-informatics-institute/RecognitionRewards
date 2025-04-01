@@ -21,13 +21,26 @@
                   <td>
                     <% if !@ranks[competition.id].empty? %>
                       <table class="table is-striped is-hoverable is-fullwidth">
-                        <% (@ranks[competition.id] || []).each do |ranking|%>
+                        <thead>
                           <tr>
-                            <td class="has-text-centered"><%= @ranks[competition.id].index(ranking) +1 %></td>
-                            <td><%= ranking[0].first %></td>
-                            <td class="has-text-right"><%= ranking[1] %></td>
+                            <td>Rank</td>
+                            <td><%= (competition.competition_type == "Election" ? 'Candidate' : 'Rewardee')%> </td>
+                            <td><%= (competition.competition_type == "Election" ? 'Votes' : 'Points')%> </td>
                           </tr>
-                        <% end %>
+                        </thead>
+                        <tbody>
+                          <% i = 1 %>
+                          <% (@ranks[competition.id][:rank] || []).each do |ranking|%>
+                            <tr>
+                              <td class="has-text-centered"><%= i %></td>
+                              <td><%= ranking[0].first %></td>
+                              <td class="has-text-right">
+                                <%= ranking[1] %> (<%= ((ranking[1]/@ranks[competition.id][:total_points].to_f)*100).round(2) %>%)
+                              </td>
+                            </tr>
+                            <% i += 1 %>
+                          <% end %>
+                        </tbody>
                       </table>
                     <%else %>
                       No current Rankings

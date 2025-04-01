@@ -13,7 +13,7 @@ class MainController < ApplicationController
 
     @ranks = {}
     @current_competitions.each do |competition|
-      @ranks[competition.id] = competition.pretty_ranking(number=3)
+      @ranks[competition.id] = { rank: competition.pretty_ranking(number=3), total_points: competition.all_points_votes }
     end
   end
 end
