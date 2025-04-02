@@ -1,5 +1,5 @@
 class RecognitionRewardMailer < ApplicationMailer
-  default from: ENV['MAIL_USERNAME']
+  default from: 'communications@ghii.org'
 
   def welcome_email(user, password)
     @user = user
