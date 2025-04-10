@@ -1,6 +1,6 @@
 <style>
   .custom-badge {
-  background-color: #6366f1;
+  background-color:rgb(8, 8, 100);
   color: white;
   font-weight: bold;
   padding: 6px 10px;
@@ -9,6 +9,11 @@
   display: inline-block;
   min-width: 32px;
   text-align: center;
+}
+.custom-gap {
+  padding: 1rem;
+  border-radius: 4px;
+  min-width: 32px;
 }
 @media (max-width: 768px) {
   .desktop-view {
@@ -54,12 +59,17 @@
                     <p class="mobile-view">
                       <%= link_to competition.name, "/competitions/#{competition.id}" %>
                       - <%= @remaining_points %> Points
-
                     </p>
 
                     <div class="desktop-view">
-                      <%= link_to "/competitions/#{competition.id}", class: 'button is-link is-relative has-text-centered mt-3' do %>
+                      <%= link_to "/competitions/#{competition.id}", class: 'button is-fullwidth is-link is-relative has-text-centered mt-4' do %>
                         <%= competition.name %>
+                        <span class="custom-gap ml-4">
+                        </span>
+                      <% end %>
+                      <div class="desktop-view">
+                      <%= link_to "/participant_points/show?competition_id=#{competition.id}&participant=#{Current.user.person_id}", class: 'button is-fullwidth is-link is-relative has-text-centered mt-3 is-info' do %>
+                        My Rewarding Patterns
                         <span class="custom-badge ml-4">
                           <%= @remaining_points %>
                         </span>
