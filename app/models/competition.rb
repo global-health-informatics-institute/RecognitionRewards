@@ -10,10 +10,29 @@ class Competition < ApplicationRecord
       remaining_points: remaining_points,
       leader: (rank.first.nil? ? nil : rank.first.first) ,
       leader_count: (rank.first.nil? ? 0 : rank.first.second) ,
-      points_to_win: points_to_win
+      points_to_win: points_to_win,
+      highest_gifter: highest_gifter,
+      most_improved: '',
+      least_active: least_active,
+      most_active: most_active
     }
 
     return summary
+  end
+
+  def highest_gifter
+    pts = PointsLog.select("gifter, sum(points_awarded) as points").where(competition_id: self.id).group(:gifter).order("points desc").first
+    return "#{Person.find(pts.gifter).full_name} (#{pts.points} points)" rescue "None"
+  end
+
+  def most_active
+    pts = PointsLog.select("gifter, count(*) as times").where(competition_id: self.id).group(:gifter).order("times desc").first
+    return "#{Person.find(pts.gifter).full_name}" rescue "None"
+  end
+
+  def least_active
+    pts = PointsLog.select("gifter, count(*) as times").where(competition_id: self.id).group(:gifter).order("times asc").first
+    return "#{Person.find(pts.gifter).full_name}" rescue "None"
   end
 
   def points_to_win
@@ -47,7 +66,7 @@ class Competition < ApplicationRecord
       return "Closed"
     end
   end
-  private
+  
 
   def all_points_votes
     if self.competition_type == "Election"
@@ -56,6 +75,8 @@ class Competition < ApplicationRecord
       ParticipantPoint.where(competition_id: self.id).sum(:total_points)
     end
   end
+  
+  private
   def remaining_points
     if self.competition_type == "Election"
       Participant.where("competition_id = ? and person_id not in (?)",

@@ -24,6 +24,12 @@
         <%= form.number_field :points_awarded, class: 'input is-medium', min: 1, required: true %>
       </div>
     </div>
+    <div class="field">
+      <label class="label">Enter Reason for Award</label>
+      <div class="control">
+        <%= form.text_field :reason, class: 'input is-medium', placeholder: 'Reason for the Award', required: true %>
+      </div>
+    </div>
     <div class="field is-grouped">
       <p class="control">
         <%= hidden_field_tag :competition_id, @competition.id %>

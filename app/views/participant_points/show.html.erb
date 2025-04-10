@@ -1,0 +1,48 @@
+<div class="columns">
+  <div class="column">
+    <h3 class="subtitle is-5">Gifting Patterns</h3>
+    <table class="table is-stripped is-fullwidth">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Person</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% (@my_gifts || []).each do |gift| %>
+            <tr>
+              <td><%= @my_gifts.index(gift) +1 %></td>
+              <td><%= gift.date_awarded.strftime('%d %b %Y') %></td>
+              <td><%= gift.gifted_to %></td>
+              <td><%= gift.points_awarded %></td>
+            </tr>
+          <% end %>
+        </tbody>
+    </table>
+  </div>
+  <div class="column">
+    <h3 class="subtitle is-5">Receiving Patterns</h3>
+    <table class="table is-stripped is-fullwidth">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Amount Received</th>
+            <th>Gifters</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% (@my_rewards || []).each do |reward| %>
+            <tr>
+              <td><%= @my_rewards.index(reward) +1 %></td>
+              <td><%= reward.date_awarded.strftime('%d %b %Y') %></td>
+              <td><%= reward.amount %></td>
+              <td><%= reward.gifters %></td>
+            </tr>
+          <% end %>
+        </tbody>
+    </table>
+  </div>
+</div>

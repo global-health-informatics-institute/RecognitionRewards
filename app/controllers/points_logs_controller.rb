@@ -27,7 +27,7 @@ class PointsLogsController < ApplicationController
       end
 
       PointsLog.create(competition_id: params[:competition_id], gifter: params[:gifter], receiver: params[:candidate],
-                       date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded])
+                       date_awarded: DateTime.now, points_awarded: params[:points_log][:points_awarded], reason: params[:points_log][:reason])
       pp.points_remaining -= params[:points_log][:points_awarded].to_i
       pp.save
     end
