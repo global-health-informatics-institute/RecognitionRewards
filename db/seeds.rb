@@ -82,3 +82,26 @@ elections = ['The MVP', 'Mover of Mountains', 'Spotlight Award', 'Conqueror of H
     Vote.create(competition_id: new_election.id, person_id: person.id, candidate_id: candidate_list.sample.id)
   end
 end
+
+ActiveRecord::Base.transaction do
+  competition = Competition.create!(
+    name: "People's Choice Award",
+    start_date: Date.current,
+    end_date: Date.parse('2025-12-20'),
+    competition_type: 'Contest'
+  )
+
+  Person.find_each do |person|
+    ParticipantPoint.create!(
+      competition_id: competition.id,
+      person_id: person.id,
+      total_points: 100,
+      points_remaining: 100
+    )
+
+    Participant.create!(
+      competition_id: competition.id,
+      person_id: person.id
+    )
+  end
+end
