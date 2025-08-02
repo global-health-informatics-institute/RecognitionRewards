@@ -16,6 +16,7 @@ class MainController < ApplicationController
         rank: competition.pretty_ranking(3),
         total_points: competition.all_points_votes,
       }
+      @participant_point = ParticipantPoint.find_by_person_id_and_competition_id(Current.user.person_id, competition.id)
       @remaining_points = ParticipantPoint.where(person_id: Current.user.user_id,
                                                  competition_id: competition.id).pluck(:points_remaining).first || 0
     end
