@@ -9,33 +9,48 @@
   display: inline-block;
   min-width: 32px;
   text-align: center;
-}
-.custom-gap {
-  padding: 1rem;
-  border-radius: 4px;
-  min-width: 32px;
-}
-@media (max-width: 768px) {
-  .desktop-view {
-    display: none !important; 
   }
-
-  .mobile-view {
-    display: block !important;
-    font-size: 0.9rem;
+  .custom-badge-info{
+    background-color: rgb(118, 159, 202);
+    color: black;
     font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    display: inline-block;
+    min-width: 32px;
+    text-align: center;
   }
-}
+  .has-background-light-custom {
+    background-color: #e0e0e0 !important;
+  }
 
-@media (min-width: 769px) {
-  .desktop-view {
-    display: block !important;
+  .custom-gap {
+    padding: 1.3rem 1rem;
+    border-radius: 4px;
+    min-width: 32px;
+  }
+  @media (max-width: 768px) {
+    .desktop-view {
+      display: none !important; 
+    }
+
+    .mobile-view {
+      display: block !important;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
   }
 
-  .mobile-view {
-    display: none !important;
+  @media (min-width: 769px) {
+    .desktop-view {
+      display: block !important;
+    }
+
+    .mobile-view {
+      display: none !important;
+    }
   }
-}
 
 </style>
 <p class="is-capitalized is-size-3 has-text-weight-semibold is-family-sans-serif">Leaderboard</p>
@@ -70,8 +85,7 @@
                       <div class="desktop-view">
                       <%= link_to "/participant_points/show?competition_id=#{competition.id}&participant=#{Current.user.person_id}", class: 'button is-fullwidth is-link is-relative has-text-centered mt-3 is-info' do %>
                         My Rewarding Patterns
-                        <span class="custom-badge ml-4">
-                          <%= @remaining_points %>
+                        <span class="custom-gap ml-4">
                         </span>
                       <% end %>
                     </div>
@@ -106,6 +120,56 @@
                     <% end %>
                   </td>
                 </tr>
+                <tr class="info-banner">
+                  <td colspan="2">
+                    <div class="columns is-multiline is-mobile">
+                      
+                      <!-- Reset Date -->
+                      <div class="column is-one-quarter-tablet is-half-mobile">
+                        <div class="notification has-text-centered py-3 has-background-light-custom">
+                          <p class="is-size-6" style="color: black;">
+                            Refreshes <span class="custom-badge-info ml-2">
+                              <%= if @participant_point.resets_on then @participant_point.resets_on.strftime("%B %d") else 'N/A' end %>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- Active Points -->
+                      <div class="column is-one-quarter-tablet is-half-mobile">
+                        <div class="notification has-text-centered py-3 has-background-light-custom">
+                          <p class="is-size-6" style="color: black;">
+                            Weekly Active<span class="custom-badge-info ml-2">
+                              <%= if @participant_point.active_points then @participant_point.active_points else 'N/A' end %>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- Frozen Points -->
+                      <div class="column is-one-quarter-tablet is-half-mobile">
+                        <div class="notification has-text-centered py-3 has-background-light-custom">
+                          <p class="is-size-6" style="color: black;">
+                            Frozen Points <span class="custom-badge-info ml-2">
+                              <%= if @participant_point.frozen_points then @participant_point.frozen_points else 'N/A' end %>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- Pending Points -->
+                      <div class="column is-one-quarter-tablet is-half-mobile">
+                        <div class="notification has-text-centered py-3 has-background-light-custom">
+                          <p class="is-size-6" style="color: black;">
+                            Pending Points<span class="custom-badge-info ml-2">
+                              <%= if @participant_point.pending_points then @participant_point.pending_points else 'N/A' end %>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
               <% end %>
             </tbody>
           </table>
@@ -113,16 +177,4 @@
       </div>
     </div>
   </div>
-<!--
-  <div class="column">
-    <div class="card">
-      <p class="card-header-title">Recent Winners</p>
-      <div class="card-content">
-        <div class="content">
-          <p class="title">123</p>
-          Lorem
-        </div>
-      </div>
-    </div>
-  </div> !-->
 </div>

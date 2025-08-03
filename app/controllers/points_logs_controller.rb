@@ -7,14 +7,18 @@ class PointsLogsController < ApplicationController
   end
 
   def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+    participant_point = ParticipantPoint.find_by(
+      person_id: params[:gifter],
+      competition_id: params[:competition_id]
+    )
     if params[:candidate] == params[:gifter]
       flash[:alert] = 'Smart!! But you cannot gift yourself'
       redirect_to new_points_log_path and return
     end
     PointsLog.transaction do
       pp = ParticipantPoint.find_by_competition_id_and_person_id(params[:competition_id], Current.user.person_id)
-      if pp.points_remaining < params[:points_log][:points_awarded].to_i
-        flash[:alert] = "You do not have enough points to award. Balance: #{pp.points_remaining}"
+      if participant_point.active_points < params[:points_log][:points_awarded].to_i
+        flash[:alert] = "You do not have enough points to award. Balance: #{participant_point.active_points}"
         redirect_to new_points_log_path and return
       end
       if params[:points_log][:points_awarded].to_i.negative?
